@@ -5,7 +5,7 @@ RUN micromamba install -y -n base -f /tmp/env.yaml && \
 USER mambauser
 RUN mkdir /code
 COPY --chmod=755 run.sh /tapis/run.sh
-COPY --chown=$MAMBA_USER:$MAMBA_USER /code/main.py .
+COPY --chown=$MAMBA_USER:$MAMBA_USER main.py /code/
 ENV PATH="/opt/conda/bin:${PATH}"
 ENV PATH "/code:$PATH"
 ENTRYPOINT [ "/tapis/run.sh" ]
