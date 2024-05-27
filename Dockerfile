@@ -3,6 +3,7 @@ COPY --chown=$MAMBA_USER:$MAMBA_USER environment.yaml /tmp/env.yaml
 RUN micromamba install -y -n base -f /tmp/env.yaml && \
     micromamba clean --all --yes
 USER mambauser
+RUN mkdir /code
 COPY --chmod=755 run.sh /tapis/run.sh
 COPY --chown=$MAMBA_USER:$MAMBA_USER /code/main.py .
 ENV PATH="/opt/conda/bin:${PATH}"
