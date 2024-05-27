@@ -1,3 +1,5 @@
 #!/bin/bash
 set -xe
-python /code/main.py fileToModify=$_tapisExecSystemInputDir/billing.csv ${WORK}/output.txt
+
+cd ${_tapisExecSystemInputDir}
+python /code/main.py billing.csv ${_tapisExecSystemOutputDir}/output.txt
