@@ -8,4 +8,4 @@ if [ "$#" -ne 2 ]; then
 fi
 
 # Run the main.py file with the input and output file
-python main.py ${1} ${2}
+python main.py ${1} ${WORK}/output.txt
