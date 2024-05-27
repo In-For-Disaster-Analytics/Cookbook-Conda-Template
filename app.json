@@ -1,5 +1,5 @@
 {
-  "id": "no-interactive-example",
+  "id": "no-interactive-conda-example",
   "version": "0.0.1",
   "description": "Run an non-interactive script on TACC using docker.",
   "owner": "${apiUserId}",
@@ -7,7 +7,7 @@
   "runtime": "SINGULARITY",
   "runtimeVersion": null,
   "runtimeOptions": ["SINGULARITY_RUN"],
-  "containerImage": "docker://ghcr.io/in-for-disaster-analytics/cookbook-template-simple:sha-fb59e5f",
+  "containerImage": "docker://ghcr.io/mosoriob/cookbook-template-conda:sha-ae8fa22",
   "jobType": "BATCH",
   "maxJobs": -1,
   "maxJobsPerUser": -1,
@@ -80,7 +80,15 @@
         "includeLaunchFiles": true
       }
     },
-    "fileInputs": [],
+    "fileInputs": [
+      {
+        "name": "Dataset File",
+        "description": "Contains the billing data to be processed",
+        "inputMode": "REQUIRED",
+        "autoMountLocal": true,
+        "sourceUrl": null
+      }
+    ],
     "fileInputArrays": [],
     "nodeCount": 1,
     "coresPerNode": 1,
