@@ -7,7 +7,7 @@
   "runtime": "SINGULARITY",
   "runtimeVersion": null,
   "runtimeOptions": ["SINGULARITY_RUN"],
-  "containerImage": "docker://ghcr.io/mosoriob/cookbook-template-conda:sha-ae8fa22",
+  "containerImage": "docker://ghcr.io/mosoriob/cookbook-template-conda:sha-108d25b",
   "jobType": "BATCH",
   "maxJobs": -1,
   "maxJobsPerUser": -1,
@@ -28,31 +28,7 @@
     "mpiCmd": null,
     "cmdPrefix": "mkdir $PWD/work $PWD/home $PWD/scratch;",
     "parameterSet": {
-      "appArgs": [
-        {
-          "name": "Greeting",
-          "description": "Choose a greeting to give to your target",
-          "inputMode": "REQUIRED",
-          "arg": "hello"
-        },
-        {
-          "name": "Target",
-          "description": "Whom to address your greeting",
-          "inputMode": "REQUIRED",
-          "arg": "world"
-        }
-      ],
-      "containerArgs": [
-        {
-          "name": "Jupyter Mounts",
-          "description": "Mount for TAP functions and user dirs",
-          "inputMode": "FIXED",
-          "arg": "--bind /share,$WORK:$PWD/work,$HOME:$PWD/home,$SCRATCH:$PWD/scratch",
-          "notes": {
-            "isHidden": true
-          }
-        }
-      ],
+      "appArgs": [],
       "schedulerOptions": [
         {
           "name": "TACC Scheduler Profile",
@@ -86,7 +62,8 @@
         "description": "Contains the billing data to be processed",
         "inputMode": "REQUIRED",
         "autoMountLocal": true,
-        "sourceUrl": null
+        "sourceUrl": null,
+        "targetPath": "billing.csv"
       }
     ],
     "fileInputArrays": [],
