@@ -1,4 +1,4 @@
-****This template is the first in a [series of templates](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
+This template is the first in a [series of templates](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
 
 ## Requirements
 
