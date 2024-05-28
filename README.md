@@ -1,40 +1,40 @@
-This template is the first in a [series of template](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python using conda or a Jupyter Notebook.
+This template is the first in a [series of templates](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
 
 ## Requirements
 
 - A GitHub account
-- TACC account. If you don't have one, you can request one [here](https://accounts.tacc.utexas.edu/register)
-- To access TACC systems, you should have an [allocation](https://tacc.utexas.edu/use-tacc/allocations/)
-  - You can see your allocations [here](https://ptdatax.tacc.utexas.edu/workbench/allocations/approved)
-  - If you don't have an allocation, you can request one [here](https://portal.tacc.utexas.edu/allocation-request)
+- TACC account. If you don't have one, you can request one [here](https://accounts.tacc.utexas.edu/register).
+- To access TACC systems, you should have an [allocation](https://tacc.utexas.edu/use-tacc/allocations/).
+  - You can see your allocations [here](https://ptdatax.tacc.utexas.edu/workbench/allocations/approved).
+  - If you don't have an allocation, you can request one [here](https://portal.tacc.utexas.edu/allocation-request).
 
 ## Template Overview
 
-This template create a simple Python script that will be used to demonstrate how to run a cookbook a TACC cluster and obtain the output using a UI. The cookbook will use a CSV file stored on TACC storage and run a Python script that reads it, calculates the average of the values in the first column, and writes the result to a file.
+This template creates a simple Python script that will be used to demonstrate how to run a cookbook on a TACC cluster and obtain the output using a UI. The cookbook will use a CSV file stored on TACC storage and run a Python script that reads it, calculates the average of the values in the first column, and writes the result to a file.
 
-In this case, the file is small for demostratives purposes. However, you can use the same process to analyze large files.
+In this case, the file is small for demonstration purposes. However, you can use the same process to analyze large files.
 
 ### How does it work?
 
-1. [`app.json`](app.json) file: it contains the definition of the Tapis application, including the application's name, description, Docker image, input files and advanced options.
-2. [`Dockerfile`](Dockerfile): a Docker Image is built from the [`Dockerfile` file](./Dockerfile). The Docker image defines the runtime environment for the application and the files that will be used by the application.
-3. [`run.sh`](run.sh): it contains all the commands that will be executed on TACC cluster.
+1. [`app.json`](app.json) file: contains the definition of the Tapis application, including the application's name, description, Docker image, input files, and advanced options.
+2. [`Dockerfile`](Dockerfile): a Docker image is built from the [`Dockerfile`](./Dockerfile). The Docker image defines the runtime environment for the application and the files that will be used by the application.
+3. [`run.sh`](run.sh): contains all the commands that will be executed on the TACC cluster.
 
 ### Upload files to TACC storage
 
-One of the goals of the template is to demostrate how to use the TACC storage system to store the input and output files. So, you should upload the CSV file to the TACC storage system.
+One of the goals of the template is to demonstrate how to use the TACC storage system to store the input and output files. So, you should upload the CSV file to the TACC storage system.
 
-1. Go to the [TACC Portal](https://portal.tacc.utexas.edu)
-2. Click on the "Data Files" tab
-3. Click on the "Add +" button
+1. Go to the [TACC Portal](https://portal.tacc.utexas.edu).
+2. Click on the "Data Files" tab.
+3. Click on the "Add +" button.
    ![alt text](images/image.png)
-4. Click on the "Upload" button
+4. Click on the "Upload" button.
    ![alt text](images/image-1.png)
-5. Select the file you want to upload and click `Upload Selected`
+5. Select the file you want to upload and click `Upload Selected`.
 
 ### Modify the Dockerfile
 
-`Dockerfile` is used to create a Docker image that will be used to run the Python script. In this case, the Docker image is created using the `microconda` base image, which is a minimal image that contains conda.
+The `Dockerfile` is used to create a Docker image that will be used to run the Python script. In this case, the Docker image is created using the `microconda` base image, which is a minimal image that contains conda.
 
 For example, the Dockerfile below installs `curl` using `apt-get`. This is useful if you need to install packages that are not available in conda.
 
