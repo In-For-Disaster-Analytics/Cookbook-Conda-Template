@@ -48,7 +48,7 @@ channels:
   - conda-forge
 dependencies:
   - python=3.9.1
-  - pandas
+  - pandas=1.2.1
 ```
 
 ### 4. Understading the `run.sh` file
