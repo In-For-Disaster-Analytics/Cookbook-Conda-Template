@@ -1,4 +1,4 @@
-This template is the first in a [series of templates](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
+****This template is the first in a [series of templates](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
 
 ## Requirements
 
@@ -133,9 +133,9 @@ Each app has a unique `id` and `description`. So, you should change these fields
 
 ## Next templates
 
-- [Running a command](https://github.com/In-For-Disaster-Analytics/cookbook_template_basic)
-- [Running a Python script using conda](https://github.com/In-For-Disaster-Analytics/cookbook_template_conda)
-- [Running a Jupyter Notebook](https://github.com/In-For-Disaster-Analytics/cookbook_jupyter_conda)
+- [Running a command](https://github.com/In-For-Disaster-Analytics/Cookbook-Docker-Template)
+- [Running a Python script using conda](https://github.com/In-For-Disaster-Analytics/Cookbook-Conda-Template)
+- [Running a Jupyter Notebook](https://github.com/In-For-Disaster-Analytics/Cookbook-Jupyter-Template)
 
 ## Authors
 
