@@ -139,5 +139,5 @@ Each app has a unique `id` and `description`. So, you should change these fields
 
 ## Authors
 
-William Mobley - wmobley@tacc.utexas.edu
-Maximiliano Osorio
+- William Mobley - wmobley@tacc.utexas.edu
+- Maximiliano Osorio - maxiosorio@gmail.com
