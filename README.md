@@ -32,22 +32,32 @@ One of the goals of the tutorial is to demostrate how to use the TACC storage sy
    ![alt text](images/image-1.png)
 5. Select the file you want to upload
 
-### 2. Define dependencies using `environment.yaml`
+### 2. Understanding the Python script
 
-In this tutorial, the Python script uses Pandas to read the CSV file. So, we need to define the dependencies in the `environment.yaml` file.
+The Python script reads a CSV file, calculates the average of the values in the first column, and writes the result to a file. It uses the Pandas library to read the CSV file.
 
-### 3. Understanding the Dockerfile
+### 3. Define dependencies using `environment.yaml`
 
-`Dockerfile` is used to create a Docker image that will be used to run the Python script. The Docker image is created using the `microconda` base image, which is a minimal image that contains conda. The `environment.yaml` file is used to install the dependencies in the Docker image.
+As we know, the Python script uses Pandas to read the CSV file. So, we need to define the dependencies in the `environment.yaml` file.
 
-### 4. Create the `run.sh` file
+Open the `environment.yaml` file and add the `pandas` packages. The content should be like this:
 
-The `run.sh` file is used to run the Python script. It activates the conda environment and runs the Python script.
+```yaml
+name: base
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9.1
+  - pandas
+```
+
+### 4. Understading the `run.sh` file
+
+The `run.sh` file is used to run the Python script. It runs the Python script.
 
 ```bash
 #!/bin/bash
 set -xe
-
 cd ${_tapisExecSystemInputDir}
 python /code/main.py billing.csv ${_tapisExecSystemOutputDir}/output.txt
 ```
@@ -57,12 +67,25 @@ The `run.sh` has two variables that are used to define the input and output dire
 - \_tapisExecSystemInputDir: The directory where the input files are staged
 - \_tapisExecSystemOutputDir: The directory where the application writes the output files
 
+### 5. Understanding the Dockerfile
+
+`Dockerfile` is used to create a Docker image that will be used to run the Python script. The Docker image is created using the `microconda` base image, which is a minimal image that contains conda. The `environment.yaml` file is used to install the dependencies in the Docker image.
+
+Since you modified the `environment.yaml` file, you should build the Docker image again. To build the Docker image, run the following command:
+
+```bash
+docker build -t cookbook-template-conda .
+docker tag cookbook-python <your-docker-username>/cookbook-template-conda
+docker push <your-docker-username>/cookbook-template-conda
+```
+
 ### 5. Update the Cookbook Definition `app.json` File
 
 Each app has a unique `id` and `description`. So, you should change these fields to match your app's name and description.
 
 1. Download the `app.json` file
 2. Change the values `id` and `description` fields with the name and description as you wish.
+3. Change the `containerImage` field with the Docker image you created `your-docker-username/cookbook-template-conda`
 
 ### 6. Create a New Application on the Cookbook UI
 
