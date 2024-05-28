@@ -1,4 +1,4 @@
-This tutorial is the first in a [series of tutorials](#next-tutorials) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python using conda or a Jupyter Notebook.
+This template is the first in a [series of template](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python using conda or a Jupyter Notebook.
 
 ## Requirements
 
@@ -8,21 +8,21 @@ This tutorial is the first in a [series of tutorials](#next-tutorials) that will
   - You can see your allocations [here](https://ptdatax.tacc.utexas.edu/workbench/allocations/approved)
   - If you don't have an allocation, you can request one [here](https://portal.tacc.utexas.edu/allocation-request)
 
-## Tutorial
+## Template Overview
 
-In this tutorial, we will create a simple Python script that will be used to demonstrate how to run a cookbook a TACC cluster and obtain the output using a UI. This cookbook will run a Python script that reads a CSV file, calculates the average of the values in the first column, and writes the result to a file.
+This template create a simple Python script that will be used to demonstrate how to run a cookbook a TACC cluster and obtain the output using a UI. The cookbook will use a CSV file stored on TACC storage and run a Python script that reads it, calculates the average of the values in the first column, and writes the result to a file.
 
-The file will be storaged on the TACC storage system. In this case, the file is small however, you can use the same process to analyze large files.
+In this case, the file is small for demostratives purposes. However, you can use the same process to analyze large files.
 
 ### How does it work?
 
-1. The [`app.json`](app.json) file contains the definition of the Tapis application, including the application's name, description, Docker image, input files and advanced options.
-2. The Docker image defines the runtime environment for the application. Also, it includes `run.sh` file that contains the commands that will be executed by the Tapis job. A Docker Image is built from the [`Dockerfile` file](./Dockerfile).
-3. The file [`run.sh`](run.sh) contains all the commands that will be executed on TACC cluster.
+1. [`app.json`](app.json) file: it contains the definition of the Tapis application, including the application's name, description, Docker image, input files and advanced options.
+2. [`Dockerfile`](Dockerfile): a Docker Image is built from the [`Dockerfile` file](./Dockerfile). The Docker image defines the runtime environment for the application and the files that will be used by the application.
+3. [`run.sh`](run.sh): it contains all the commands that will be executed on TACC cluster.
 
-### 1. Upload the file to the TACC storage system
+### Upload files to TACC storage
 
-One of the goals of the tutorial is to demostrate how to use the TACC storage system to store the input and output files. So, you should upload the CSV file to the TACC storage system.
+One of the goals of the template is to demostrate how to use the TACC storage system to store the input and output files. So, you should upload the CSV file to the TACC storage system.
 
 1. Go to the [TACC Portal](https://portal.tacc.utexas.edu)
 2. Click on the "Data Files" tab
@@ -30,17 +30,34 @@ One of the goals of the tutorial is to demostrate how to use the TACC storage sy
    ![alt text](images/image.png)
 4. Click on the "Upload" button
    ![alt text](images/image-1.png)
-5. Select the file you want to upload
+5. Select the file you want to upload and click `Upload Selected`
 
-### 2. Define dependencies using `environment.yaml`
+### Modify the Dockerfile
 
-In this tutorial, the Python script uses Pandas to read the CSV file. So, we need to define the dependencies in the `environment.yaml` file.
+`Dockerfile` is used to create a Docker image that will be used to run the Python script. In this case, the Docker image is created using the `microconda` base image, which is a minimal image that contains conda.
 
-### 3. Understanding the Dockerfile
+For example, the Dockerfile below installs `curl` using `apt-get`. This is useful if you need to install packages that are not available in conda.
 
-`Dockerfile` is used to create a Docker image that will be used to run the Python script. The Docker image is created using the `microconda` base image, which is a minimal image that contains conda. The `environment.yaml` file is used to install the dependencies in the Docker image.
+```Dockerfile
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+```
 
-### 4. Create the `run.sh` file
+### Define conda dependencies using `environment.yaml`
+
+The `environment.yaml` file is used to define the conda environment that will be used to run the Python script. In this case, the `environment.yaml` file contains the dependencies needed to run the Python script.
+
+```yaml
+name: base
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9.1
+  - pandas=1.2.1
+```
+
+### Job run script
 
 The `run.sh` file is used to run the Python script. It activates the conda environment and runs the Python script.
 
@@ -57,14 +74,39 @@ The `run.sh` has two variables that are used to define the input and output dire
 - \_tapisExecSystemInputDir: The directory where the input files are staged
 - \_tapisExecSystemOutputDir: The directory where the application writes the output files
 
-### 5. Update the Cookbook Definition `app.json` File
+## Create your cookbook
+
+You can use this repository as a template to create your cookbook. Follow the steps below to create your cookbook.
+
+### Create a new repository
+
+1. Click on the "Use this template" button to create a new repository
+2. Fill in the form with the information for your new repository
+
+### Build the Docker image
+
+1. Clone the repository
+2. Build the Docker image using the command below
+
+```bash
+docker build -t cookbook-python .
+```
+
+3. Push the Docker image to a container registry
+
+```bash
+docker tag cookbook-python <your-registry>/cookbook-python
+docker push <your-registry>/cookbook-python
+```
+
+### Modify the `app.json` file
 
 Each app has a unique `id` and `description`. So, you should change these fields to match your app's name and description.
 
 1. Download the `app.json` file
 2. Change the values `id` and `description` fields with the name and description as you wish.
 
-### 6. Create a New Application on the Cookbook UI
+### Create a New Application on the Cookbook UI
 
 1. Go to [Cookbook UI](https://in-for-disaster-analytics.github.io/cookbooks-ui/#/apps)
 2. Click on the "Create Application" button
@@ -72,14 +114,15 @@ Each app has a unique `id` and `description`. So, you should change these fields
 4. Click "Create Application"
 5. A new application will be created, and you will be redirected to the application's page
 
-### 7. Run Your Cookbook
+### Run your Cookbook
 
-1. Click on the "Run" button on the right side of the page. This will open the Portal UI
-2. Click on the "Select" button to choose the input file
+1. Go to the application's page on the Cookbook UI, if you are not already there
+2. Click on the "Run" button on the right side of the page. This will open the Portal UI
+3. Click on the "Select" button to choose the input file
    ![alt text](images/image-2.png)
-3. Click "Run"
+4. Click "Run"
 
-### 8. Check the Output
+### Check the output
 
 1. After the job finishes, you can check the output by clicking on the "Output location" link on the job's page
    ![Show a job finished ](images/job-finished.png)
@@ -88,7 +131,7 @@ Each app has a unique `id` and `description`. So, you should change these fields
 3. Click on a file to see its content. In this case, the file is named `output.txt`
    ![alt text](images/image-3.png)
 
-## Next Tutorials
+## Next templates
 
 - [Running a Python script]
 - [Running a Jupyter Notebook]
