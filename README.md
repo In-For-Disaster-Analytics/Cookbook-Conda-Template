@@ -16,9 +16,13 @@ The file will be storaged on the TACC storage system. In this case, the file is 
 
 ### How does it work?
 
+1. The [`app.json`](app.json) file contains the definition of the Tapis application, including the application's name, description, Docker image, input files and advanced options.
+2. The Docker image defines the runtime environment for the application. Also, it includes `run.sh` file that contains the commands that will be executed by the Tapis job. A Docker Image is built from the [`Dockerfile` file](./Dockerfile).
+3. The file [`run.sh`](run.sh) contains all the commands that will be executed on TACC cluster.
+
 ### 1. Upload the file to the TACC storage system
 
-One of our goal is to demostrate how to use the TACC storage system to store the input and output files. In this case, we will upload a CSV file to the TACC storage system.
+One of the goals of the tutorial is to demostrate how to use the TACC storage system to store the input and output files. So, you should upload the CSV file to the TACC storage system.
 
 1. Go to the [TACC Portal](https://portal.tacc.utexas.edu)
 2. Click on the "Data Files" tab
@@ -30,11 +34,11 @@ One of our goal is to demostrate how to use the TACC storage system to store the
 
 ### 2. Define dependencies using `environment.yaml`
 
-The `environment.yaml` file is used to define the dependencies required to run the cookbook. In this case, we need Python and Pandas.
+In this tutorial, the Python script uses Pandas to read the CSV file. So, we need to define the dependencies in the `environment.yaml` file.
 
-### 3. Create the Python script
+### 3. Understanding the Dockerfile
 
-The Python script reads the CSV file, calculates the average of the values in the first column, and writes the result to a file. The script is named `main.py`.
+`Dockerfile` is used to create a Docker image that will be used to run the Python script. The Docker image is created using the `microconda` base image, which is a minimal image that contains conda. The `environment.yaml` file is used to install the dependencies in the Docker image.
 
 ### 4. Create the `run.sh` file
 
@@ -48,7 +52,10 @@ cd ${_tapisExecSystemInputDir}
 python /code/main.py billing.csv ${_tapisExecSystemOutputDir}/output.txt
 ```
 
-The `run.sh` has two variables that are used to define the input and output directories. These variables are `_tapisExecSystemInputDir` and `_tapisExecSystemOutputDir`.
+The `run.sh` has two variables that are used to define the input and output directories. These variables are `_tapisExecSystemInputDir` and `_tapisExecSystemOutputDir` which are automatically set by the Tapis system.
+
+- \_tapisExecSystemInputDir: The directory where the input files are staged
+- \_tapisExecSystemOutputDir: The directory where the application writes the output files
 
 ### 5. Update the Cookbook Definition `app.json` File
 
