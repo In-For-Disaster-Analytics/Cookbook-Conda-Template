@@ -1,13 +1,13 @@
 {
-  "id": "modflow-2005",
-  "version": "0.0.1",
+  "id": "no-interactive-conda-example",
+  "version": "0.0.3",
   "description": "Run an non-interactive script on TACC using docker.",
   "owner": "${apiUserId}",
   "enabled": true,
   "runtime": "SINGULARITY",
   "runtimeVersion": null,
   "runtimeOptions": ["SINGULARITY_RUN"],
-  "containerImage": "docker://ghcr.io/mosoriob/cookbook-modflow-2005:0.0.1",
+  "containerImage": "docker://ghcr.io/in-for-disaster-analytics/cookbook-conda-template:0.0.1",
   "jobType": "BATCH",
   "maxJobs": -1,
   "maxJobsPerUser": -1,
@@ -58,68 +58,12 @@
     },
     "fileInputs": [
       {
-        "name": "BAS 6",
+        "name": "Dataset File",
         "description": "Contains the billing data to be processed",
         "inputMode": "REQUIRED",
         "autoMountLocal": true,
         "sourceUrl": null,
-        "targetPath": "input.ba6"
-      },
-      {
-        "name": "DIS",
-        "description": "Contains the billing data to be processed",
-        "inputMode": "REQUIRED",
-        "autoMountLocal": true,
-        "sourceUrl": null,
-        "targetPath": "input.dis"
-      },
-      {
-        "name": "BCF 6",
-        "description": "Contains the billing data to be processed",
-        "inputMode": "REQUIRED",
-        "autoMountLocal": true,
-        "sourceUrl": null,
-        "targetPath": "input.bc6"
-      },
-      {
-        "name": "OC",
-        "description": "Contains the billing data to be processed",
-        "inputMode": "REQUIRED",
-        "autoMountLocal": true,
-        "sourceUrl": null,
-        "targetPath": "input.oc"
-      },
-      {
-        "name": "WEL",
-        "description": "Contains the billing data to be processed",
-        "inputMode": "REQUIRED",
-        "autoMountLocal": true,
-        "sourceUrl": null,
-        "targetPath": "input.wel"
-      },
-      {
-        "name": "DRN",
-        "description": "Contains the billing data to be processed",
-        "inputMode": "REQUIRED",
-        "autoMountLocal": true,
-        "sourceUrl": null,
-        "targetPath": "input.drn"
-      },
-      {
-        "name": "HFB 6",
-        "description": "Contains the billing data to be processed",
-        "inputMode": "REQUIRED",
-        "autoMountLocal": true,
-        "sourceUrl": null,
-        "targetPath": "input.hf6"
-      },
-      {
-        "name": "SIP",
-        "description": "Contains the billing data to be processed",
-        "inputMode": "REQUIRED",
-        "autoMountLocal": true,
-        "sourceUrl": null,
-        "targetPath": "input.sip"
+        "targetPath": "billing.csv"
       }
     ],
     "fileInputArrays": [],
@@ -132,9 +76,9 @@
   },
   "tags": ["portalName: ALL"],
   "notes": {
-    "label": "MODFLOW 2005",
+    "label": "Python script using conda",
     "helpUrl": "https://github.com/In-For-Disaster-Analytics/cookbook-conda-template",
-    "helpText": "Modflow is a popular open-source groundwater flow model distributed by the U.S. Geological survey",
+    "helpText": "Read CSV file stored on TACC storage and run a Python script that reads it, calculates the average of the values in the first column, and writes the result to a file.",
     "hideNodeCountAndCoresPerNode": true,
     "isInteractive": false,
     "icon": "jupyter",
